@@ -21,7 +21,8 @@ dependencyResolutionManagement {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-rootProject.name = "skeleton"
+rootProject.name = "price-it"
+
 include(":app")
 include(":core")
 include(":feature")
