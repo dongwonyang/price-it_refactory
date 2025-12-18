@@ -91,7 +91,6 @@ fun MapSection(
                 false
             }
     ) {
-        // --- MapComponent + NaverMapView 통합 시작 ---
         val currentLocation = state.currentLocation?.toLatLng() ?: MapConstants.DEFAULT_LOCATION.toLatLng()
 
         val cameraPositionState: CameraPositionState = rememberCameraPositionState {
@@ -159,7 +158,6 @@ fun MapSection(
                 }
             }
         }
-        // --- MapComponent + NaverMapView 통합 끝 ---
 
         // 반경 버튼 (현재 위치가 있으면 표시)
         if (state.currentLocation != null) {
