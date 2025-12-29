@@ -7,7 +7,6 @@ plugins {
 val localProperties = Properties()
 localProperties.load(project.rootProject.file("local.properties").inputStream())
 
-
 android {
     defaultConfig {
         applicationId = "project.priceit"
@@ -15,8 +14,11 @@ android {
     }
 }
 
-
 dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.feature.main)
+
+    // Naver Maps
+    implementation(libs.naver.map.compose)
+    implementation(libs.naver.map.location)
 }
