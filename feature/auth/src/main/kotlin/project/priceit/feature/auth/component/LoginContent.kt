@@ -30,7 +30,7 @@ fun LoginContent(
     Column(
         modifier = modifier
             .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(Dimens.Space16, alignment = Alignment.CenterVertically)
+        verticalArrangement = Arrangement.spacedBy(Dimens.DpMedium, alignment = Alignment.CenterVertically)
 
     ) {
 

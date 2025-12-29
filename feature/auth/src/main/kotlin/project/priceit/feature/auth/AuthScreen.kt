@@ -47,7 +47,7 @@ private fun AuthScreen(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .padding(padding)
-            .padding(Dimens.common)
+            .padding(Dimens.CommonPadding)
             .fillMaxSize(),
     ) {
         when(uiState){

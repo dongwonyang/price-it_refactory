@@ -23,7 +23,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import project.priceit.core.designsystem.component.CommonTextField
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.home.component.MapSection
 import project.priceit.feature.home.component.RadiusSettingDialog
@@ -98,7 +98,7 @@ private fun HomeScreen(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
                     .padding(padding)
-                    .padding(Dimens.common)
+                    .padding(Dimens.CommonPadding)
                     .verticalScroll(scrollState, enabled = !isMapTouched)
             ) {
                 MapSection(
@@ -114,10 +114,10 @@ private fun HomeScreen(
                 Text(text = "장소 검색", fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(6.dp))
 
-                OutlinedTextField(
-                    value = query,
-                    onValueChange = { query = it },
-                    placeholder = { Text("여기에 장소를 입력하세요") },
+                CommonTextField(
+                    text = query,
+                    onTextChange = { query = it },
+                    hint = "여기에 장소를 입력하세요",
                     modifier = Modifier.fillMaxWidth()
                 )
 
