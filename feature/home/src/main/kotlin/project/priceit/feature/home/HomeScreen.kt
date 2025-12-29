@@ -103,7 +103,7 @@ private fun HomeScreen(
             ) {
                 MapSection(
                     state = uiState,
-                    onMartClicked = {},
+                    onMartClick = {},
                     onShowRadiusDialog = viewModel::showRadiusDialog,
                 )
 

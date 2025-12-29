@@ -72,7 +72,7 @@ import project.priceit.model.MartEntity
 @Composable
 fun MapSection(
     state: HomeUiState.Success,
-    onMartClicked: (MartEntity) -> Unit,
+    onMartClick: (MartEntity) -> Unit,
     onShowRadiusDialog: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -147,14 +147,14 @@ fun MapSection(
                                 userLocationText = "내 위치",
                                 martEntities = state.nearbyMartEntities,
                                 martsWithValidCommissions = state.martsWithValidCommissions,
-                                onMartClick = onMartClicked
+                                onMartClick = onMartClick
                             )
                         }
                     }
 
-                    if (currentLocation == null) {
-                        ShowLocationErrorMessage()
-                    }
+//                    if (currentLocation == null) {
+//                        ShowLocationErrorMessage()
+//                    }
                 }
             }
         }
@@ -469,6 +469,6 @@ fun MapSectionPreview() {
 
     MapSection(
         state = sampleState,
-        onMartClicked = {}
+        onMartClick = {}
     )
 }
