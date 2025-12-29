@@ -13,6 +13,7 @@ material3Android = "1.2.0"
 runtimeAndroid = "1.5.1"
 javaxInject = "1"
 kotlinxCoroutines = "1.8.1"
+accompanistPermissions = "0.34.0"
 
 # Timber
 timber = "5.0.1"
@@ -59,8 +60,14 @@ material = "1.13.0"
 core = "1.8.0"
 roomKtx = "2.8.3"
 
+# Naver Maps
+# https://github.com/fornewid/naver-map-compose
+naver-map-compose = "1.9.0"
+naver-map-location = "21.0.2"
+
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -120,6 +127,10 @@ retrofit-bom = { module = "com.squareup.retrofit2:retrofit-bom", version.ref = "
 kotlinx-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxImmutable" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 
+# Naver Maps
+naver-map-compose = { group = "io.github.fornewid", name = "naver-map-compose", version.ref = "naver-map-compose" }
+naver-map-location = { group = "io.github.fornewid", name = "naver-map-location", version.ref = "naver-map-location" }
+
 [plugins]
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -129,6 +140,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
+google-gms-services = { id = "com.google.gms.google-services", version = "4.4.2" }
 
 ## precompiled plugins
 example-android-application = { id = "example.android.application", version = "unspecified" }

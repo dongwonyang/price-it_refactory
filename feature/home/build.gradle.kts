@@ -3,4 +3,10 @@ plugins {
 }
 
 dependencies {
+    // Naver Maps
+    implementation(libs.naver.map.compose)
+    implementation(libs.naver.map.location)
+
+    // Permissions
+    implementation(libs.accompanist.permissions)
 }
