@@ -43,7 +43,6 @@ fun CommonEditTextBox(
     readOnly: Boolean = false,
     enabled: Boolean = true,
     trailingIcon: @Composable (() -> Unit)? = null,
-    onClick: (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
@@ -57,11 +56,6 @@ fun CommonEditTextBox(
             .clip(shape)
             .border(1.dp, borderColor, shape)
             .background(Color.White)
-            .clickable(
-                enabled = onClick != null
-            ) {
-                onClick?.invoke()
-            }
             .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         BasicTextField(
