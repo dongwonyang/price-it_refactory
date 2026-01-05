@@ -63,6 +63,7 @@ import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.util.MarkerIcons
 import project.priceit.core.designsystem.MapConstants
+import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.home.HomeUiState
 import project.priceit.feature.home.toLatLng
 import project.priceit.model.MartEntity
@@ -109,8 +110,8 @@ fun MapSection(
                 modifier = Modifier
                     .width(mapWidth)
                     .height(mapWidth)
-                    .padding(bottom = 8.dp),
-                shape = RoundedCornerShape(8.dp)
+                    .padding(bottom = Dimens.DpSmall),
+                shape = RoundedCornerShape(Dimens.RoundCommon)
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     NaverMap(
@@ -256,7 +257,7 @@ private fun ShowLocationErrorMessage() {
                 .padding(16.dp)
                 .wrapContentWidth(),
             color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.9f),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(Dimens.DpSmall)
         ) {
             Text(
                 text = "위치 정보를 가져올 수 없습니다.",
@@ -278,7 +279,7 @@ fun RadiusButton(
     Box(
         modifier = modifier
             .padding(16.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(Dimens.RoundCommon))
             .background(Color.White)
             .clickable(onClick = onClick)
     ) {
