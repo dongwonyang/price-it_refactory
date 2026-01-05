@@ -42,6 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import project.priceit.core.designsystem.component.CommonButton
 import project.priceit.core.designsystem.component.CommonEditTextBox
+import project.priceit.core.designsystem.component.CommonListItem
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.home.component.MapSection
 import project.priceit.feature.home.component.RadiusSettingDialog
@@ -122,13 +123,6 @@ private fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                Text(
-                    text = "현 위치 기반 검색",
-                    color = Color.Gray,
-                    fontSize = 12.sp,
-                    modifier = Modifier.padding(top = 6.dp)
-                )
-
                 Spacer(modifier = Modifier.height(8.dp))
 
 
@@ -139,17 +133,17 @@ private fun HomeScreen(
                         .fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(Dimens.DpSmall))
 
                 // Current requests
                 Text("현재 진행 중인 의뢰", fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Dimens.DpSmall))
                 RequestList(items = sampleRequests)
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text("추천 의뢰", fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Dimens.DpSmall))
                 RequestList(items = sampleRequests)
             }
         }
@@ -161,41 +155,19 @@ private fun HomeScreen(
 fun RequestList(items: List<RequestItem>) {
     Column {
         items.forEach { item ->
-            RequestRow(item)
-            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+            item.run {
+                CommonListItem(
+                    mainText = title,
+                    subText = location,
+                    rightText = reward,
+                    onClick = {  }
+                )
+            }
+            HorizontalDivider(modifier = Modifier.padding(vertical = Dimens.DpSmall))
         }
     }
 }
 
-@Composable
-fun RequestRow(item: RequestItem) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { /* 이동 */ }
-            .padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(Color(0xFFE3F2FD)),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(Icons.Default.Place, contentDescription = null, tint = Color(0xFF1976D2))
-        }
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        Column(modifier = Modifier.weight(1f)) {
-            Text(item.title, fontWeight = FontWeight.SemiBold)
-            Text(item.location, color = Color.Gray, fontSize = 12.sp)
-        }
-
-        Text(item.reward, color = Color.Gray, modifier = Modifier.padding(start = 8.dp))
-    }
-}
 
 data class RequestItem(val title: String, val location: String, val reward: String)
 
