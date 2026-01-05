@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.tooling.preview.Preview
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.core.designsystem.theme.Primary
+import project.priceit.core.designsystem.theme.Typography
 
 @Composable
 fun CommonButton(
@@ -26,7 +27,7 @@ fun CommonButton(
         shape = RoundedCornerShape(Dimens.RoundCommon),
         enabled = enabled
     ) {
-        Text(text, color = White)
+        Text(text, color = White, style = Typography.bodyMedium)
     }
 }
 
