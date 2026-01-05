@@ -11,14 +11,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -51,11 +49,6 @@ private fun HomeScreen(
     uiState: HomeUiState,
     viewModel: HomeViewModel
 ) {
-    val sampleRequests = listOf(
-        RequestItem("딸기 한 팩 가격", "수석 마트", "리워드 : 15p"),
-        RequestItem("진라면 한 묶음 가격", "상암 홈플러스", "리워드 : 10p")
-    )
-
     //스크롤 상태
     val scrollState = rememberScrollState()
     // 'true'면 스크롤 잠금 → 맵만 드래그 가능
@@ -93,18 +86,18 @@ private fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
-                SearchSection {  }
+                SearchSection { }
                 Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
                 ListSection(
                     title = "현재 진행 중인 의뢰",
-                    items = sampleRequests,
+                    items = uiState.currentRequestList,
                 )
                 Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
                 ListSection(
                     title = "추천의뢰",
-                    items = sampleRequests,
+                    items = uiState.recommentRequestList,
                 )
             }
         }
@@ -121,7 +114,7 @@ fun RequestList(items: List<RequestItem>) {
                     mainText = title,
                     subText = location,
                     rightText = reward,
-                    onClick = {  }
+                    onClick = { }
                 )
             }
             HorizontalDivider(modifier = Modifier.padding(vertical = Dimens.DpSmall))
@@ -130,14 +123,12 @@ fun RequestList(items: List<RequestItem>) {
 }
 
 
-data class RequestItem(val title: String, val location: String, val reward: String)
-
 @Composable
 @Preview
 fun HomeScreenPreview() {
     HomeScreen(
         padding = PaddingValues(0.dp),
-        uiState = HomeUiState.Success(),
+        uiState = HomeUiState.test(),
         viewModel = null!!
     )
 }
