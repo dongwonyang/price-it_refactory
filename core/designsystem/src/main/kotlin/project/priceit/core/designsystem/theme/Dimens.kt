@@ -7,6 +7,8 @@ object Dimens {
     val CommonPadding = 24.dp
     val RoundCommon = 8.dp
 
+    val ButtonHeight = 44.dp
+
 
     val SpSmall = 12.sp
     val SpMedium = 14.sp

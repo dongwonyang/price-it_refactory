@@ -40,7 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import project.priceit.core.designsystem.component.CommonTextField
+import project.priceit.core.designsystem.component.CommonButton
+import project.priceit.core.designsystem.component.CommonEditTextBox
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.home.component.MapSection
 import project.priceit.feature.home.component.RadiusSettingDialog
@@ -110,15 +111,15 @@ private fun HomeScreen(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // Search section
-                var query by remember { mutableStateOf(TextFieldValue("")) }
+                var query by remember { mutableStateOf("") }
                 Text(text = "장소 검색", fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(6.dp))
 
-                CommonTextField(
-                    text = query,
-                    onTextChange = { query = it },
-                    hint = "여기에 장소를 입력하세요",
-                    modifier = Modifier.fillMaxWidth()
+                CommonEditTextBox(
+                    value = query,
+                    onValueChange = { query = it },
+                    placeHolder = "장소를 입력하세요.",
+                    modifier = Modifier.fillMaxWidth(),
                 )
 
                 Text(
@@ -130,15 +131,13 @@ private fun HomeScreen(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Button(
+
+                CommonButton(
+                    text = "검색",
                     onClick = { /* 검색 동작 */ },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(44.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3B82F6))
-                ) {
-                    Text("검색", color = Color.White)
-                }
+                )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
