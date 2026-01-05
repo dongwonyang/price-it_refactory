@@ -23,7 +23,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,6 +40,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import project.priceit.core.designsystem.component.CommonButton
+import project.priceit.core.designsystem.component.CommonEditTextBox
+import project.priceit.core.designsystem.component.CommonListItem
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.home.component.MapSection
 import project.priceit.feature.home.component.RadiusSettingDialog
@@ -98,7 +100,7 @@ private fun HomeScreen(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
                     .padding(padding)
-                    .padding(Dimens.common)
+                    .padding(Dimens.CommonPadding)
                     .verticalScroll(scrollState, enabled = !isMapTouched)
             ) {
                 MapSection(
@@ -110,47 +112,38 @@ private fun HomeScreen(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // Search section
-                var query by remember { mutableStateOf(TextFieldValue("")) }
+                var query by remember { mutableStateOf("") }
                 Text(text = "장소 검색", fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(6.dp))
 
-                OutlinedTextField(
+                CommonEditTextBox(
                     value = query,
                     onValueChange = { query = it },
-                    placeholder = { Text("여기에 장소를 입력하세요") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Text(
-                    text = "현 위치 기반 검색",
-                    color = Color.Gray,
-                    fontSize = 12.sp,
-                    modifier = Modifier.padding(top = 6.dp)
+                    placeHolder = "장소를 입력하세요.",
+                    modifier = Modifier.fillMaxWidth(),
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Button(
+
+                CommonButton(
+                    text = "검색",
                     onClick = { /* 검색 동작 */ },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(44.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3B82F6))
-                ) {
-                    Text("검색", color = Color.White)
-                }
+                )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(Dimens.DpSmall))
 
                 // Current requests
                 Text("현재 진행 중인 의뢰", fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Dimens.DpSmall))
                 RequestList(items = sampleRequests)
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text("추천 의뢰", fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Dimens.DpSmall))
                 RequestList(items = sampleRequests)
             }
         }
@@ -162,41 +155,19 @@ private fun HomeScreen(
 fun RequestList(items: List<RequestItem>) {
     Column {
         items.forEach { item ->
-            RequestRow(item)
-            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+            item.run {
+                CommonListItem(
+                    mainText = title,
+                    subText = location,
+                    rightText = reward,
+                    onClick = {  }
+                )
+            }
+            HorizontalDivider(modifier = Modifier.padding(vertical = Dimens.DpSmall))
         }
     }
 }
 
-@Composable
-fun RequestRow(item: RequestItem) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { /* 이동 */ }
-            .padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(Color(0xFFE3F2FD)),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(Icons.Default.Place, contentDescription = null, tint = Color(0xFF1976D2))
-        }
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        Column(modifier = Modifier.weight(1f)) {
-            Text(item.title, fontWeight = FontWeight.SemiBold)
-            Text(item.location, color = Color.Gray, fontSize = 12.sp)
-        }
-
-        Text(item.reward, color = Color.Gray, modifier = Modifier.padding(start = 8.dp))
-    }
-}
 
 data class RequestItem(val title: String, val location: String, val reward: String)
 
