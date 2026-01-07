@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import project.priceit.core.designsystem.component.CommonListItem
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.home.component.ListSection
 import project.priceit.feature.home.component.MapSection
@@ -54,31 +52,30 @@ private fun HomeScreen(
     // 'true'면 스크롤 잠금 → 맵만 드래그 가능
     var isMapTouched by remember { mutableStateOf(false) }
 
-    when (uiState) {
-        is HomeUiState.Error -> {}
-        HomeUiState.Loading -> {}
-        is HomeUiState.Success -> {
-            if (uiState.isRadiusDialogVisible) {
-                var tempRadius by remember { mutableStateOf(uiState.searchRadius) }
-                RadiusSettingDialog(
-                    currentRadius = tempRadius,
-                    onRadiusChange = { tempRadius = it },
-                    onDismiss = viewModel::hideRadiusDialog,
-                    onConfirm = {
-                        viewModel.updateSearchRadius(tempRadius)
-                        viewModel.hideRadiusDialog()
-                    }
-                )
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(padding)
-                    .padding(Dimens.CommonPadding)
-                    .verticalScroll(scrollState, enabled = !isMapTouched)
-            ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(padding)
+            .padding(Dimens.CommonPadding)
+            .verticalScroll(scrollState, enabled = !isMapTouched)
+    ) {
+        when (uiState) {
+            is HomeUiState.Error -> {}
+            HomeUiState.Loading -> {}
+            is HomeUiState.Success -> {
+                if (uiState.isRadiusDialogVisible) {
+                    var tempRadius by remember { mutableStateOf(uiState.searchRadius) }
+                    RadiusSettingDialog(
+                        currentRadius = tempRadius,
+                        onRadiusChange = { tempRadius = it },
+                        onDismiss = viewModel::hideRadiusDialog,
+                        onConfirm = {
+                            viewModel.updateSearchRadius(tempRadius)
+                            viewModel.hideRadiusDialog()
+                        }
+                    )
+                }
                 MapSection(
                     state = uiState,
                     onMartClick = {},
@@ -100,24 +97,6 @@ private fun HomeScreen(
                     items = uiState.recommentRequestList,
                 )
             }
-        }
-    }
-
-}
-
-@Composable
-fun RequestList(items: List<RequestItem>) {
-    Column {
-        items.forEach { item ->
-            item.run {
-                CommonListItem(
-                    mainText = title,
-                    subText = location,
-                    rightText = reward,
-                    onClick = { }
-                )
-            }
-            HorizontalDivider(modifier = Modifier.padding(vertical = Dimens.DpSmall))
         }
     }
 }

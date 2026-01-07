@@ -25,8 +25,6 @@ internal fun AuthRoute(
     AuthScreen(
         padding = padding,
         uiState = uiState.value,
-        onEmailChange = viewModel::onEmailChange,
-        onPasswordChange =  viewModel::onPasswordChange,
         onLoginClick = viewModel::login,
         onSignupClick = {},
         onLoginSuccess = navigateHome
@@ -37,9 +35,7 @@ internal fun AuthRoute(
 private fun AuthScreen(
     padding: PaddingValues,
     uiState: AuthUiState,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
+    onLoginClick: (String, String) -> Unit,
     onSignupClick: () -> Unit,
     onLoginSuccess: () -> Unit
 ) {
@@ -50,20 +46,18 @@ private fun AuthScreen(
             .padding(Dimens.CommonPadding)
             .fillMaxSize(),
     ) {
-        when(uiState){
+        when (uiState) {
             is AuthUiState.Login -> {
                 LoginContent(
-                    email = uiState.email,
-                    password = uiState.password,
-                    onEmailChange = onEmailChange,
-                    onPasswordChange =  onPasswordChange,
                     onLoginClick = onLoginClick,
                     onSignupClick = {},
                 )
             }
+
             is AuthUiState.OnLogin -> {
                 onLoginSuccess()
             }
+
             else -> {}
         }
     }
