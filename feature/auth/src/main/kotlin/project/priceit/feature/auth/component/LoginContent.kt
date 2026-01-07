@@ -1,87 +1,104 @@
 package project.priceit.feature.auth.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import project.priceit.core.designsystem.R
+import project.priceit.core.designsystem.component.CommonButton
 import project.priceit.core.designsystem.theme.Dimens
+import project.priceit.core.designsystem.theme.Primary
+import project.priceit.core.designsystem.theme.White
 
 @Composable
 fun LoginContent(
-    email: String,
-    password: String,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
-    onSignupClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLoginClick: (String, String) -> Unit,
+    onSignupClick: () -> Unit
 ) {
+    var id by remember { mutableStateOf("") }
+    var pw by remember { mutableStateOf("") }
+
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp.dp
+    val screenWidth = configuration.screenWidthDp.dp
+
+    // 화면 크기에 따른 로고 높이 계산 (화면 높이의 15~20%)
+    val logoHeight = (screenHeight * 0.18f).coerceAtMost(160.dp).coerceAtLeast(100.dp)
+
     Column(
         modifier = modifier
             .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(Dimens.DpMedium, alignment = Alignment.CenterVertically)
-
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        // 이메일 입력
-        OutlinedTextField(
-            value = email,
-            onValueChange = onEmailChange,
-            label = { Text("이메일") },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        // 비밀번호 입력
-        OutlinedTextField(
-            value = password,
-            onValueChange = onPasswordChange,
-            label = { Text("비밀번호") },
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        // 로그인 버튼
-        Button(
-            onClick = onLoginClick,
+        Image(
+            painter = painterResource(id = R.drawable.logo_price_it_no_text),
+            contentDescription = "PRICE-IT 로고",
             modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
-        ) {
-            Text("로그인")
-        }
+                .align(Alignment.CenterHorizontally)
+                .height(logoHeight)
+                .fillMaxWidth(0.8f),
+            contentScale = ContentScale.Fit
+        )
+        Spacer(modifier = Modifier.height(Dimens.DpLarge))
 
-        // 회원가입 링크
-        TextButton(
-            onClick = onSignupClick,
-            modifier = Modifier.align(Alignment.End)
+        Column(
+            modifier = Modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.Center
         ) {
-            Text("회원가입")
+            LoginEditTextBox(
+                description = "Email",
+                text = id,
+                onTextChange = { id = it }
+            )
+            Spacer(modifier = Modifier.height(Dimens.DpSmall))
+
+
+            LoginEditTextBox(
+                description = "Password}",
+                text = pw,
+                onTextChange = { pw = it }
+            )
+            Spacer(modifier = Modifier.height(Dimens.DpLarge))
+
+            CommonButton(
+                text = "로그인",
+                onClick = { onLoginClick(id, pw) },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(Dimens.DpSmall))
+            CommonButton(
+                text = "회원가입",
+                onClick = { onSignupClick() },
+                bgColor = White,
+                textColor = Primary,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
 
 @Preview
 @Composable
-fun PrevLoginContent(){
+fun PrevLoginContent() {
     LoginContent(
-        email = "",
-        password = "",
-        onEmailChange = {},
-        onPasswordChange = {},
-        onLoginClick = {},
+        onLoginClick = { _, _ -> },
         onSignupClick = {},
         modifier = Modifier
     )

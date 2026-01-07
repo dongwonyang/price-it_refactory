@@ -37,7 +37,7 @@ import project.priceit.core.designsystem.theme.LightGray
 fun CommonEditTextBox(
     value: String,
     onValueChange: (String) -> Unit,
-    placeHolder: String,
+    placeHolder: String = "",
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     readOnly: Boolean = false,
