@@ -22,3 +22,5 @@ val Black5 = Color(0x0D000000)
 
 val Green = Color(0xFF43A047)
 val Red = Color(0xFFEE0505)
+
+val White = Color(0xFFFFFFFF)
