@@ -1,7 +1,7 @@
 package project.priceit.feature.auth.model
 
 sealed class AuthUiState {
-    data class Login(val email: String = "", val password:String = ""): AuthUiState()
+    data class Login(val isSignUp: Boolean = false, val alertMsg: String = "") : AuthUiState()
 
-    data object OnLogin: AuthUiState()
+    data object OnLogin : AuthUiState()
 }
