@@ -26,27 +26,6 @@ class AuthViewModel @Inject constructor(
     val effect = _effect.receiveAsFlow()
 
 
-    // 로그인
-    fun login(id: String, pw: String) = viewModelScope.launch {
-        uiState.value.let {
-            authRepository.login(id, pw).onSuccess {
-                if (it) _effect.send(AuthEffect.NavigateHome)
-            }.onFailure { }
-        }
-    }
-
-    // 회원가입 모달 온오프
-    fun setSignUp(state: Boolean) {
-        _uiState.update { prev ->
-            prev.copy(isSignUp = state) ?: prev
-        }
-    }
-
-    // 회원가입 유효성 검사
-    fun isValidId(id: String) {}
-    fun isValidPw(pw: String) {}
-    fun isValidNick(nick: String) {}
-
     // 이벤트 처리
     fun onEvent(event: AuthEvent) {
         when (event) {
@@ -64,4 +43,25 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
+
+    // 로그인
+    fun login(id: String, pw: String) = viewModelScope.launch {
+        uiState.value.let {
+            authRepository.login(id, pw).onSuccess {
+                if (it) _effect.send(AuthEffect.NavigateHome)
+            }.onFailure { }
+        }
+    }
+
+    // 회원가입 모달 온오프
+    fun setSignUp(state: Boolean) {
+        _uiState.update { prev ->
+            prev.copy(isSignUp = state) ?: prev
+        }
+    }
+    // 회원가입 유효성 검사
+    fun isValidId(id: String) {}
+    fun isValidPw(pw: String) {}
+
+    fun isValidNick(nick: String) {}
 }
