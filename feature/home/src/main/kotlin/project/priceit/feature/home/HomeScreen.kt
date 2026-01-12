@@ -11,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +26,10 @@ import project.priceit.feature.home.component.ListSection
 import project.priceit.feature.home.component.MapSection
 import project.priceit.feature.home.component.RadiusSettingDialog
 import project.priceit.feature.home.component.SearchSection
+import project.priceit.feature.home.model.HomeEffect
+import project.priceit.feature.home.model.HomeEvent
+import project.priceit.feature.home.model.HomeUiState
+import project.priceit.feature.home.model.test
 
 @Composable
 internal fun HomeRoute(
@@ -34,10 +39,18 @@ internal fun HomeRoute(
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { eff ->
+            when (eff) {
+                HomeEffect.NavigateMy -> navigateMy()
+            }
+        }
+    }
+
     HomeScreen(
         padding = padding,
         uiState = uiState.value,
-        viewModel = viewModel
+        onEvent = viewModel::onEvent
     )
 }
 
@@ -45,7 +58,7 @@ internal fun HomeRoute(
 private fun HomeScreen(
     padding: PaddingValues,
     uiState: HomeUiState,
-    viewModel: HomeViewModel
+    onEvent: (HomeEvent) -> Unit
 ) {
     //스크롤 상태
     val scrollState = rememberScrollState()
@@ -60,44 +73,37 @@ private fun HomeScreen(
             .padding(Dimens.CommonPadding)
             .verticalScroll(scrollState, enabled = !isMapTouched)
     ) {
-        when (uiState) {
-            is HomeUiState.Error -> {}
-            HomeUiState.Loading -> {}
-            is HomeUiState.Success -> {
-                if (uiState.isRadiusDialogVisible) {
-                    var tempRadius by remember { mutableStateOf(uiState.searchRadius) }
-                    RadiusSettingDialog(
-                        currentRadius = tempRadius,
-                        onRadiusChange = { tempRadius = it },
-                        onDismiss = viewModel::hideRadiusDialog,
-                        onConfirm = {
-                            viewModel.updateSearchRadius(tempRadius)
-                            viewModel.hideRadiusDialog()
-                        }
-                    )
+        if (uiState.isRadiusDialogVisible) {
+            var tempRadius by remember { mutableStateOf(uiState.searchRadius) }
+            RadiusSettingDialog(
+                currentRadius = tempRadius,
+                onRadiusChange = { tempRadius = it },
+                onDismiss = { onEvent(HomeEvent.HideRadiusDialog) },
+                onConfirm = {
+                    onEvent(HomeEvent.RadiusTempChanged(tempRadius))
                 }
-                MapSection(
-                    state = uiState,
-                    onMartClick = {},
-                    onShowRadiusDialog = viewModel::showRadiusDialog,
-                )
-                Spacer(modifier = Modifier.height(Dimens.DpMedium))
-
-                SearchSection { }
-                Spacer(modifier = Modifier.height(Dimens.DpMedium))
-
-                ListSection(
-                    title = "현재 진행 중인 의뢰",
-                    items = uiState.currentRequestList,
-                )
-                Spacer(modifier = Modifier.height(Dimens.DpMedium))
-
-                ListSection(
-                    title = "추천의뢰",
-                    items = uiState.recommentRequestList,
-                )
-            }
+            )
         }
+        MapSection(
+            state = uiState,
+            onMartClick = {},
+            onShowRadiusDialog = { onEvent(HomeEvent.ShowRadiusDialog) }
+        )
+        Spacer(modifier = Modifier.height(Dimens.DpMedium))
+
+        SearchSection { }
+        Spacer(modifier = Modifier.height(Dimens.DpMedium))
+
+        ListSection(
+            title = "현재 진행 중인 의뢰",
+            items = uiState.currentRequestList,
+        )
+        Spacer(modifier = Modifier.height(Dimens.DpMedium))
+
+        ListSection(
+            title = "추천의뢰",
+            items = uiState.recommentRequestList,
+        )
     }
 }
 
@@ -107,7 +113,7 @@ private fun HomeScreen(
 fun HomeScreenPreview() {
     HomeScreen(
         padding = PaddingValues(0.dp),
-        uiState = HomeUiState.test(),
-        viewModel = null!!
+        uiState = test(),
+        onEvent = {},
     )
 }
