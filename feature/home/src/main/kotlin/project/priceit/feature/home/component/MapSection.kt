@@ -64,15 +64,15 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.util.MarkerIcons
 import project.priceit.core.designsystem.MapConstants
 import project.priceit.core.designsystem.theme.Dimens
-import project.priceit.feature.home.HomeUiState
-import project.priceit.feature.home.toLatLng
+import project.priceit.feature.home.model.HomeUiState
+import project.priceit.feature.home.model.toLatLng
 import project.priceit.model.MartEntity
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalNaverMapApi::class)
 @Composable
 fun MapSection(
-    state: HomeUiState.Success,
+    state: HomeUiState,
     onMartClick: (MartEntity) -> Unit,
     onShowRadiusDialog: () -> Unit = {},
     modifier: Modifier = Modifier
@@ -461,7 +461,7 @@ fun MapSectionPreview() {
             existCommission = 0
         ),
     )
-    val sampleState = HomeUiState.Success(
+    val sampleState = HomeUiState(
         currentLocation = MapConstants.DEFAULT_LOCATION,
         searchRadius = 0.3f,
         nearbyMartEntities = sampleMarts,

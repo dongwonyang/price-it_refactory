@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import project.priceit.core.designsystem.component.CommonListItem
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.core.designsystem.theme.Typography
-import project.priceit.feature.home.RequestItem
+import project.priceit.feature.home.model.RequestItem
 
 @Composable
 fun ListSection(
