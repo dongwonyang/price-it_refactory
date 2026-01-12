@@ -51,7 +51,7 @@ fun CommonEditTextBox(
 
     Box(
         modifier = modifier
-            .height(48.dp)
+            .height(Dimens.TexBoxHeight)
             .fillMaxWidth()
             .clip(shape)
             .border(1.dp, borderColor, shape)

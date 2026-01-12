@@ -18,4 +18,6 @@ object Dimens {
     val DpSmall = 8.dp
     val DpMedium = 16.dp
     val DpLarge = 24.dp
+
+    val TexBoxHeight = 48.dp
 }
