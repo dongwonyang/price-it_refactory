@@ -29,7 +29,7 @@ fun CommonButton(
     Button(
         onClick = { onClick() },
         modifier = modifier.height(Dimens.ButtonHeight),
-        border = BorderStroke(1.dp, outlineColor),
+        border = BorderStroke(if (enabled) 1.dp else 0.dp, outlineColor),
         colors = ButtonDefaults.buttonColors(containerColor = bgColor),
         shape = RoundedCornerShape(Dimens.RoundCommon),
         enabled = enabled
