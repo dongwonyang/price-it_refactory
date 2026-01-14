@@ -8,19 +8,17 @@ import androidx.navigation.compose.composable
 import project.priceit.core.navigation.MainTabRoute
 
 fun NavController.navigateHome(
-    navOptions: NavOptions
+    navOptions: NavOptions = NavOptions.Builder().build()
 ) {
     navigate(MainTabRoute.Home, navOptions)
 }
 
 fun NavGraphBuilder.homeNavGraph(
     padding: PaddingValues,
-    navigateMy: () -> Unit
 ) {
     composable<MainTabRoute.Home> {
         HomeRoute(
             padding = padding,
-            navigateMy = navigateMy
         )
     }
 }
