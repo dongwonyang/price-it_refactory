@@ -9,8 +9,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import project.priceit.core.navigation.MainTabRoute
 import project.priceit.core.navigation.Route
 import project.priceit.feature.home.navigateHome
+import project.priceit.feature.my.navigateMy
+import project.priceit.feature.request.navigateRequest
+import project.priceit.feature.search.navigateSearch
 
 class MainNavigator(
     val navController: NavHostController
@@ -30,17 +34,31 @@ class MainNavigator(
             currentDestination?.hasRoute(tab::class) == true
         }
 
+    val currentRoute: Route?
+        @Composable get() {
+            val dest = currentDestination
+            return Route.find { route ->
+                dest?.hasRoute(route::class) == true
+            }
+        }
+
+
+
     fun navigate(tab: MainTab) {
         val navOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
-                inclusive = true  // -> Intro/Quiz 백스택에서 제거됨
+                saveState = true // 나중에 다시 해당 탭으로 돌아올 때 복원 가능
+                inclusive = false // popUpTo 대상(startDestination)을 제거할지 여부, false = startDestination은 남김
             }
-            launchSingleTop = true
+            launchSingleTop = true // (탭 여러 번 눌러도 중복 쌓임 방지)
+            restoreState = true // 다시 해당 탭으로 돌아올 때 UI 상태 유지
         }
 
         when (tab) {
             MainTab.HOME -> navController.navigateHome(navOptions)
-            MainTab.MY -> {}
+            MainTab.MY -> navController.navigateMy(navOptions)
+            MainTab.Search ->  navController.navigateSearch(navOptions)
+            MainTab.Request -> navController.navigateRequest(navOptions)
         }
     }
 
@@ -49,7 +67,8 @@ class MainNavigator(
         currentDestination?.hasRoute(it::class) == true
     }
 
-    fun navigateHome(){
+
+    fun navigateHome() {
         navController.navigateHome(singleTopOptions)
     }
 }

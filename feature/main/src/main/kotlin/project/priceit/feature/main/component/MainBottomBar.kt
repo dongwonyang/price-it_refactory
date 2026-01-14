@@ -34,6 +34,10 @@ import project.priceit.core.designsystem.theme.SkeletonTheme
 import project.priceit.feature.main.MainTab
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
+import project.priceit.core.designsystem.theme.Black
+import project.priceit.core.designsystem.theme.Black5
+import project.priceit.core.designsystem.theme.Black50
+import project.priceit.core.designsystem.theme.Dimens
 
 @Composable
 internal fun MainBottomBar(
@@ -56,7 +60,7 @@ internal fun MainBottomBar(
                     color = AppColors.White,
                     shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
                 )
-                .padding(horizontal = 44.dp),
+                .padding(horizontal = Dimens.CommonPadding),
             horizontalArrangement = Arrangement.spacedBy(64.dp),
         ) {
             tabs.forEach { tab ->
@@ -94,7 +98,7 @@ private fun RowScope.MainBottomBarItem(
         Icon(
             painter = painterResource(tab.iconResId),
             contentDescription = tab.contentDescription,
-            tint = if (selected) AppColors.Gray07 else AppColors.Gray04,
+            tint = if (selected) Black else Black5,
             modifier = Modifier.size(24.dp),
         )
 
@@ -103,7 +107,7 @@ private fun RowScope.MainBottomBarItem(
         Text(
             text = tab.contentDescription,
             style = MaterialTheme.typography.bodySmall.copy(
-                color = if (selected) AppColors.Gray07 else AppColors.Gray04
+                color = if (selected) Black else Black5
             ),
             maxLines = 1,
         )

@@ -12,12 +12,22 @@ enum class MainTab(
     val route: MainTabRoute
 ) {
     HOME(
-        iconResId = R.drawable.ic_launcher_background,
+        iconResId = project.priceit.core.designsystem.R.drawable.ic_home,
         contentDescription = "홈",
         route = MainTabRoute.Home,
     ),
+    Search(
+        iconResId = project.priceit.core.designsystem.R.drawable.ic_search,
+        contentDescription = "검색",
+        route = MainTabRoute.Search,
+    ),
+    Request(
+        iconResId = project.priceit.core.designsystem.R.drawable.ic_request,
+        contentDescription = "의뢰",
+        route = MainTabRoute.Request,
+    ),
     MY(
-        iconResId = R.drawable.ic_launcher_background,
+        iconResId = project.priceit.core.designsystem.R.drawable.ic_my,
         contentDescription = "마이",
         route = MainTabRoute.My,
     );
