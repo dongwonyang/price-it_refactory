@@ -15,6 +15,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import project.priceit.feature.main.component.MainBottomBar
 import project.priceit.feature.main.component.MainNavHost
+import project.priceit.feature.main.component.TopBar
 import java.net.UnknownHostException
 
 @Composable
@@ -69,6 +70,13 @@ private fun MainScreenContent(
                 tabs = MainTab.entries.toPersistentList(),
                 currentTab = navigator.currentTab,
                 onTabSelected = { navigator.navigate(it) }
+            )
+        },
+        topBar = {
+            TopBar(
+                route = navigator.currentRoute,
+                onBackClick = { },
+                onBellClick = { },
             )
         },
         snackbarHost = { SnackbarHost(snackBarHostState) }
