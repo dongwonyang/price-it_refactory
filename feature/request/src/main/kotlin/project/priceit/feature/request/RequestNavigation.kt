@@ -1,4 +1,4 @@
-package project.priceit.feature.home
+package project.priceit.feature.request
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
@@ -7,17 +7,17 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import project.priceit.core.navigation.MainTabRoute
 
-fun NavController.navigateHome(
+fun NavController.navigateRequest(
     navOptions: NavOptions = NavOptions.Builder().build()
 ) {
-    navigate(MainTabRoute.Home, navOptions)
+    navigate(MainTabRoute.Request, navOptions)
 }
 
-fun NavGraphBuilder.homeNavGraph(
+fun NavGraphBuilder.requestNavGraph(
     padding: PaddingValues,
 ) {
-    composable<MainTabRoute.Home> {
-        HomeRoute(
+    composable<MainTabRoute.Request> {
+        RequestRoute(
             padding = padding,
         )
     }

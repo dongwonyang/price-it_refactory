@@ -11,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.home.component.ListSection
@@ -34,7 +38,6 @@ import project.priceit.feature.home.model.test
 @Composable
 internal fun HomeRoute(
     padding: PaddingValues,
-    navigateMy: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
@@ -42,16 +45,39 @@ internal fun HomeRoute(
     LaunchedEffect(Unit) {
         viewModel.effect.collect { eff ->
             when (eff) {
-                HomeEffect.NavigateMy -> navigateMy()
+                else -> {}
             }
         }
     }
 
-    HomeScreen(
-        padding = padding,
-        uiState = uiState.value,
-        onEvent = viewModel::onEvent
-    )
+    val showContent = remember { mutableStateOf(true) }
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_PAUSE -> {
+                    showContent.value = false
+                }
+                Lifecycle.Event.ON_RESUME -> {
+                    showContent.value = true
+                }
+                else -> {}
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+    if(showContent.value) {
+        HomeScreen(
+            padding = padding,
+            uiState = uiState.value,
+            onEvent = viewModel::onEvent
+        )
+    }
 }
 
 @Composable
@@ -60,7 +86,6 @@ private fun HomeScreen(
     uiState: HomeUiState,
     onEvent: (HomeEvent) -> Unit
 ) {
-    //스크롤 상태
     val scrollState = rememberScrollState()
     // 'true'면 스크롤 잠금 → 맵만 드래그 가능
     var isMapTouched by remember { mutableStateOf(false) }
