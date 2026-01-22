@@ -1,7 +1,9 @@
 package project.priceit.core.designsystem.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -28,7 +30,11 @@ fun CommonButton(
 ) {
     Button(
         onClick = { onClick() },
-        modifier = modifier.height(Dimens.ButtonHeight),
+        modifier = modifier.height(Dimens.ButtonHeight).heightIn(min = 36.dp),
+        contentPadding = PaddingValues(
+            horizontal = 12.dp,
+            vertical = 0.dp
+        ),
         border = BorderStroke(if (enabled) 1.dp else 0.dp, outlineColor),
         colors = ButtonDefaults.buttonColors(containerColor = bgColor),
         shape = RoundedCornerShape(Dimens.RoundCommon),
