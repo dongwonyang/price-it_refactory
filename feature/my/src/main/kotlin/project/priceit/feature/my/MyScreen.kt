@@ -3,7 +3,9 @@ package project.priceit.feature.my
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -15,7 +17,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import project.priceit.core.designsystem.component.GrayDivider
 import project.priceit.core.designsystem.theme.Dimens
+import project.priceit.feature.my.component.ActivityHistorySection
 import project.priceit.feature.my.component.ProfileSection
+import project.priceit.feature.my.model.MyEffect
 import project.priceit.feature.my.model.MyEvent
 import project.priceit.feature.my.model.MyUiState
 
@@ -29,7 +33,7 @@ internal fun MyRoute(
     LaunchedEffect(Unit) {
         viewModel.effect.collect { eff ->
             when (eff) {
-                else -> {}
+                MyEffect.NavigateHistory -> {}
             }
         }
     }
@@ -60,6 +64,10 @@ fun MyScreen(
             onEditProfileClick = {  },
         )
 
+        Spacer(modifier = Modifier.height(Dimens.DpMedium))g
         GrayDivider()
+        Spacer(modifier = Modifier.height(Dimens.DpMedium))
+
+        ActivityHistorySection()
     }
 }
