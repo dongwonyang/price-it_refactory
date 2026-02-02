@@ -64,7 +64,7 @@ fun MyScreen(
             onEditProfileClick = {  },
         )
 
-        Spacer(modifier = Modifier.height(Dimens.DpMedium))g
+        Spacer(modifier = Modifier.height(Dimens.DpMedium))
         GrayDivider()
         Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
