@@ -1,6 +1,7 @@
 package project.priceit.feature.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -96,7 +97,8 @@ private fun HomeScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(padding)
             .padding(horizontal = Dimens.CommonPadding)
-            .verticalScroll(scrollState, enabled = !isMapTouched)
+            .verticalScroll(scrollState, enabled = !isMapTouched),
+        verticalArrangement = Arrangement.spacedBy(Dimens.DpMedium)
     ) {
         if (uiState.isRadiusDialogVisible) {
             var tempRadius by remember { mutableStateOf(uiState.searchRadius) }
@@ -116,16 +118,13 @@ private fun HomeScreen(
             onMartClick = {},
             onShowRadiusDialog = { onEvent(HomeEvent.ShowRadiusDialog) }
         )
-        Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
         SearchSection { }
-        Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
         ListSection(
             title = "현재 진행 중인 의뢰",
             items = uiState.currentRequestList,
         )
-        Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
         ListSection(
             title = "추천의뢰",

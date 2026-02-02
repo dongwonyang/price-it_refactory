@@ -1,6 +1,7 @@
 package project.priceit.feature.my
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -57,7 +58,8 @@ fun MyScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(padding)
             .padding(Dimens.CommonPadding)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(Dimens.DpMedium)
     ) {
         Spacer(modifier = Modifier.height(Dimens.CommonPadding))
 
@@ -66,9 +68,7 @@ fun MyScreen(
             onEditProfileClick = {  },
         )
 
-        Spacer(modifier = Modifier.height(Dimens.DpMedium))
         GrayDivider()
-        Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
         ActivityHistorySection()
 
