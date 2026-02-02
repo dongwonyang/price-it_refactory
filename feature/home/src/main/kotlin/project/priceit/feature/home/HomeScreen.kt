@@ -45,7 +45,7 @@ internal fun HomeRoute(
     LaunchedEffect(Unit) {
         viewModel.effect.collect { eff ->
             when (eff) {
-                else -> {}
+                HomeEffect.NavigateMy -> {}
             }
         }
     }
