@@ -59,6 +59,8 @@ fun MyScreen(
             .padding(Dimens.CommonPadding)
             .verticalScroll(rememberScrollState())
     ) {
+        Spacer(modifier = Modifier.height(Dimens.CommonPadding))
+
         ProfileSection(
             myProfileUiState = uiState.myProfileSectionUiState,
             onEditProfileClick = {  },
@@ -69,5 +71,7 @@ fun MyScreen(
         Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
         ActivityHistorySection()
+
+        Spacer(modifier = Modifier.height(Dimens.CommonPadding))
     }
 }

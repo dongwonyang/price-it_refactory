@@ -95,7 +95,7 @@ private fun HomeScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(padding)
-            .padding(Dimens.CommonPadding)
+            .padding(horizontal = Dimens.CommonPadding)
             .verticalScroll(scrollState, enabled = !isMapTouched)
     ) {
         if (uiState.isRadiusDialogVisible) {
@@ -109,6 +109,8 @@ private fun HomeScreen(
                 }
             )
         }
+        Spacer(modifier = Modifier.height(Dimens.CommonPadding))
+
         MapSection(
             state = uiState,
             onMartClick = {},
@@ -129,6 +131,8 @@ private fun HomeScreen(
             title = "추천의뢰",
             items = uiState.recommentRequestList,
         )
+
+        Spacer(modifier = Modifier.height(Dimens.CommonPadding))
     }
 }
 
