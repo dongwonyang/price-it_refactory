@@ -2,6 +2,7 @@ package project.priceit.feature.main.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -17,6 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import project.priceit.core.designsystem.R
+import project.priceit.core.designsystem.component.GrayDivider
 import project.priceit.core.designsystem.theme.Typography
 import project.priceit.core.navigation.MainTabRoute
 import project.priceit.core.navigation.Route
@@ -29,51 +31,53 @@ fun TopBar(
     onBellClick: () -> Unit,
 ) {
     if (route != null && route != Route.AuthRoute) {
-        TopAppBar(
-            title = {
-                if (route == MainTabRoute.Home) {
-                    Box(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.logo_price_it_no_text),
-                            contentDescription = "PRICE-IT 로고",
-                            modifier = Modifier
-                                .height(32.dp)
-                                .width(120.dp),
-                            contentScale = ContentScale.Fit
+        Column {
+            TopAppBar(
+                title = {
+                    if (route == MainTabRoute.Home) {
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.logo_price_it_no_text),
+                                contentDescription = "PRICE-IT 로고",
+                                modifier = Modifier
+                                    .height(32.dp)
+                                    .width(120.dp),
+                                contentScale = ContentScale.Fit
+                            )
+                        }
+                    } else {
+                        Text(
+                            text = route.toString(),
+                            color = Color.Black,
+                            style = Typography.titleMedium
                         )
                     }
-                } else {
-                    Text(
-                        text = route.toString(),
-                        color = Color.Black,
-                        style = Typography.titleMedium
-                    )
-                }
-
-            },
-            navigationIcon = {
-                if(route !is MainTabRoute)
-                IconButton(onClick = { onBackClick() }) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_left),
-                        contentDescription = "Back"
-                    )
-                }
-            },
-            actions = {
-                if (route is MainTabRoute) {
-                    IconButton(onClick = {
-                        onBellClick()
-                    }) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_bell),
-                            contentDescription = "notification"
-                        )
+                },
+                navigationIcon = {
+                    if (route !is MainTabRoute)
+                        IconButton(onClick = { onBackClick() }) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_left),
+                                contentDescription = "Back"
+                            )
+                        }
+                },
+                actions = {
+                    if (route is MainTabRoute) {
+                        IconButton(onClick = {
+                            onBellClick()
+                        }) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_bell),
+                                contentDescription = "notification"
+                            )
+                        }
                     }
-                }
-            },
-        )
+                },
+            )
+            ShadowDivider()
+        }
     }
 }

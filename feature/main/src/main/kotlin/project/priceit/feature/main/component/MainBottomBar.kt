@@ -1,8 +1,6 @@
 package project.priceit.feature.main.component
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
@@ -14,10 +12,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,15 +25,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import project.priceit.core.designsystem.theme.AppColors
-import project.priceit.core.designsystem.theme.SkeletonTheme
-import project.priceit.feature.main.MainTab
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
+import project.priceit.core.designsystem.theme.AppColors
 import project.priceit.core.designsystem.theme.Black
 import project.priceit.core.designsystem.theme.Black5
-import project.priceit.core.designsystem.theme.Black50
-import project.priceit.core.designsystem.theme.Dimens
+import project.priceit.core.designsystem.theme.SkeletonTheme
+import project.priceit.feature.main.MainTab
 
 @Composable
 internal fun MainBottomBar(
@@ -47,28 +41,30 @@ internal fun MainBottomBar(
     currentTab: MainTab?,
     onTabSelected: (MainTab) -> Unit,
 ) {
+
     AnimatedVisibility(
         visible = visible,
-        enter = fadeIn() + slideIn { IntOffset(0, it.height) },
-        exit = fadeOut() + slideOut { IntOffset(0, it.height) }
+        enter = slideIn { IntOffset(0, it.height) },
+        exit = slideOut { IntOffset(0, it.height) }
     ) {
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .background(
-                    color = AppColors.White,
-                    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-                )
-                .padding(horizontal = Dimens.CommonPadding),
-            horizontalArrangement = Arrangement.spacedBy(64.dp),
-        ) {
-            tabs.forEach { tab ->
-                MainBottomBarItem(
-                    tab = tab,
-                    selected = tab == currentTab,
-                    onClick = { onTabSelected(tab) },
-                )
+        Column() {
+            ShadowDivider()
+
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .background(
+                        color = AppColors.White,
+                    )
+            ) {
+                tabs.forEach { tab ->
+                    MainBottomBarItem(
+                        tab = tab,
+                        selected = tab == currentTab,
+                        onClick = { onTabSelected(tab) },
+                    )
+                }
             }
         }
     }
@@ -81,7 +77,7 @@ private fun RowScope.MainBottomBarItem(
     selected: Boolean,
     onClick: () -> Unit,
 ) {
-    Column (
+    Column(
         modifier = modifier
             .weight(1f)
             .height(64.dp)
