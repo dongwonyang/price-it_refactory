@@ -19,10 +19,10 @@ fun ListSection(
     title:String,
     items: List<RequestItem>
 ) {
-    Text(title, fontWeight = FontWeight.Bold, style = Typography.bodyMedium)
-    Spacer(modifier = Modifier.height(Dimens.DpSmall))
-
     Column {
+        Text(title, fontWeight = FontWeight.Bold, style = Typography.bodyMedium)
+        Spacer(modifier = Modifier.height(Dimens.DpSmall))
+
         items.forEach { item ->
             item.run {
                 CommonListItem(
