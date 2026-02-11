@@ -5,7 +5,8 @@ data class MyUiState(
 )
 
 data class MyProfileSectionUiState(
-    val userName: String = "",
+    val userName: String = "tester",
     val profileImageUrl: String? = null,
-    val point: Int = 0
+    val point: Int = 0,
+    val isDialog: Boolean = false
 )
