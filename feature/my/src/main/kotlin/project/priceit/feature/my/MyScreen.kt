@@ -1,7 +1,6 @@
 package project.priceit.feature.my
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -14,11 +13,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import project.priceit.core.designsystem.component.GrayDivider
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.my.component.ActivityHistorySection
+import project.priceit.feature.my.component.ProfileDialog
 import project.priceit.feature.my.component.ProfileSection
 import project.priceit.feature.my.model.MyEffect
 import project.priceit.feature.my.model.MyEvent
@@ -58,20 +60,45 @@ fun MyScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(padding)
             .padding(Dimens.CommonPadding)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(Dimens.DpMedium)
+            .verticalScroll(rememberScrollState())
     ) {
-        Spacer(modifier = Modifier.height(Dimens.CommonPadding))
+        uiState.myProfileSectionUiState.run {
+            if (isDialog) {
+                ProfileDialog(
+                    currentNickname = userName,
+                    currentImageUrl = profileImageUrl,
+                    onDismiss = { onEvent(MyEvent.HideProfileDialog) },
+                    onConfirm = { newNickname, newImageUri ->
+                        onEvent(
+                            MyEvent.SetProfile(
+                                newNickname = newNickname,
+                                newImageUri = newImageUri
+                            )
+                        )
+                    }
+                )
+            }
+        }
 
         ProfileSection(
             myProfileUiState = uiState.myProfileSectionUiState,
-            onEditProfileClick = {  },
+            onEditProfileClick = { onEvent(MyEvent.ShowProfileDialog) },
         )
 
+        Spacer(modifier = Modifier.height(Dimens.DpMedium))
         GrayDivider()
+        Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
         ActivityHistorySection()
-
-        Spacer(modifier = Modifier.height(Dimens.CommonPadding))
     }
+}
+
+@Preview
+@Composable
+fun MyScreenPreview() {
+    MyScreen(
+        padding = PaddingValues(0.dp),
+        uiState = MyUiState(),
+        onEvent = {}
+    )
 }

@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import project.priceit.core.designsystem.R
 import project.priceit.core.designsystem.component.CommonButton
+import project.priceit.core.designsystem.component.CommonEditTextBox
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.core.designsystem.theme.Primary
 import project.priceit.core.designsystem.theme.White
@@ -62,18 +63,18 @@ fun LoginContent(
             modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Center
         ) {
-            LoginEditTextBox(
-                description = "Email",
-                text = id,
-                onTextChange = { id = it }
+            CommonEditTextBox(
+                label = "Email",
+                value = id,
+                onValueChange = { id = it }
             )
             Spacer(modifier = Modifier.height(Dimens.DpSmall))
 
 
-            LoginEditTextBox(
-                description = "Password}",
-                text = pw,
-                onTextChange = { pw = it }
+            CommonEditTextBox(
+                label = "Password",
+                value = pw,
+                onValueChange = { pw = it },
             )
             Spacer(modifier = Modifier.height(Dimens.DpLarge))
 
