@@ -1,6 +1,7 @@
 package project.priceit.feature.my
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,7 @@ import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.my.component.ActivityHistorySection
 import project.priceit.feature.my.component.ProfileDialog
 import project.priceit.feature.my.component.ProfileSection
+import project.priceit.feature.my.component.RecentHistorySection
 import project.priceit.feature.my.model.MyEffect
 import project.priceit.feature.my.model.MyEvent
 import project.priceit.feature.my.model.MyUiState
@@ -61,8 +63,9 @@ fun MyScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(padding)
-            .padding(Dimens.CommonPadding)
-            .verticalScroll(rememberScrollState())
+            .padding(horizontal = Dimens.CommonPadding)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(Dimens.DpMedium)
     ) {
         uiState.myProfileSectionUiState.run {
             if (isDialog) {
@@ -87,12 +90,19 @@ fun MyScreen(
             onEditProfileClick = { onEvent(MyEvent.ShowProfileDialog) },
         )
 
-        Spacer(modifier = Modifier.height(Dimens.DpMedium))
         GrayDivider()
-        Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
         ActivityHistorySection(
             onClickBox = { type ->
+                onEvent(MyEvent.ClickHistory(type))
+            }
+        )
+
+        GrayDivider()
+
+        RecentHistorySection(
+            uiState = uiState.recentActivityUiState,
+            onClick = { type ->
                 onEvent(MyEvent.ClickHistory(type))
             }
         )
