@@ -23,6 +23,7 @@ import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.my.component.ActivityHistorySection
 import project.priceit.feature.my.component.ProfileDialog
 import project.priceit.feature.my.component.ProfileSection
+import project.priceit.feature.my.component.RecentHistorySection
 import project.priceit.feature.my.model.MyEffect
 import project.priceit.feature.my.model.MyEvent
 import project.priceit.feature.my.model.MyUiState
@@ -62,7 +63,7 @@ fun MyScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(padding)
-            .padding(Dimens.CommonPadding)
+            .padding(horizontal = Dimens.CommonPadding)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(Dimens.DpMedium)
     ) {
@@ -99,7 +100,12 @@ fun MyScreen(
 
         GrayDivider()
 
-
+        RecentHistorySection(
+            uiState = uiState.recentActivityUiState,
+            onClick = { type ->
+                onEvent(MyEvent.ClickHistory(type))
+            }
+        )
     }
 }
 
