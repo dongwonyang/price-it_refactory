@@ -27,6 +27,9 @@ class MyViewModel @Inject constructor() : ViewModel() {
             MyEvent.HideProfileDialog -> setProfileDialog(false)
             MyEvent.ShowProfileDialog -> setProfileDialog(true)
             is MyEvent.SetProfile -> setProfile(event.newNickname, event.newImageUri)
+            is MyEvent.ClickHistory -> {
+                _effect.trySend(MyEffect.NavigateHistory(event.historyType))
+            }
             else -> {}
         }
     }

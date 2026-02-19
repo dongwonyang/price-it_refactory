@@ -8,6 +8,7 @@ dependencies {
     implementation(projects.feature.search)
     implementation(projects.feature.request)
     implementation(projects.feature.my)
+    implementation(projects.feature.history)
 
     implementation(libs.kotlinx.immutable)
 }

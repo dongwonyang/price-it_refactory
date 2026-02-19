@@ -25,18 +25,20 @@ import project.priceit.feature.my.component.ProfileSection
 import project.priceit.feature.my.model.MyEffect
 import project.priceit.feature.my.model.MyEvent
 import project.priceit.feature.my.model.MyUiState
+import project.priceit.model.HistoryType
 
 @Composable
 internal fun MyRoute(
     padding: PaddingValues,
     viewModel: MyViewModel = hiltViewModel(),
+    navigateHistory: (HistoryType) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect { eff ->
             when (eff) {
-                MyEffect.NavigateHistory -> {}
+                is MyEffect.NavigateHistory -> navigateHistory(eff.historyType)
             }
         }
     }
@@ -89,7 +91,11 @@ fun MyScreen(
         GrayDivider()
         Spacer(modifier = Modifier.height(Dimens.DpMedium))
 
-        ActivityHistorySection()
+        ActivityHistorySection(
+            onClickBox = { type ->
+                onEvent(MyEvent.ClickHistory(type))
+            }
+        )
     }
 }
 
