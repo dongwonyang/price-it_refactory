@@ -14,6 +14,7 @@ sealed interface Route {
     companion object {
         val entries: List<Route> = listOf(
             AuthRoute,
+            HistoryRoute(HistoryType.WORK),
             MainTabRoute.Home,
             MainTabRoute.Search,
             MainTabRoute.Request,
