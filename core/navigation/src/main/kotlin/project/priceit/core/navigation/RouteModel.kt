@@ -2,10 +2,14 @@ package project.priceit.core.navigation
 
 import androidx.compose.runtime.Composable
 import kotlinx.serialization.Serializable
+import project.priceit.model.HistoryType
 
 sealed interface Route {
     @Serializable
     data object AuthRoute : Route
+
+    @Serializable
+    data class HistoryRoute(val historyType: HistoryType): Route
 
     companion object {
         val entries: List<Route> = listOf(
