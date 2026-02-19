@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import project.priceit.core.navigation.MainTabRoute
+import project.priceit.model.HistoryType
 
 fun NavController.navigateMy(
     navOptions: NavOptions = NavOptions.Builder().build()
@@ -15,10 +16,12 @@ fun NavController.navigateMy(
 
 fun NavGraphBuilder.myNavGraph(
     padding: PaddingValues,
+    navigateHistory: (HistoryType) -> Unit
 ) {
     composable<MainTabRoute.My> {
         MyRoute(
             padding = padding,
+            navigateHistory = navigateHistory
         )
     }
 }

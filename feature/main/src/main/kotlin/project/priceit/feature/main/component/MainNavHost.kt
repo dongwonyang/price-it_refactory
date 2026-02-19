@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import project.priceit.feature.auth.authNavGraph
+import project.priceit.feature.history.historyNavGraph
 import project.priceit.feature.home.homeNavGraph
 import project.priceit.feature.main.MainNavigator
 import project.priceit.feature.my.myNavGraph
@@ -49,6 +50,11 @@ fun MainNavHost(
             )
 
             myNavGraph(
+                padding = padding,
+                navigateHistory = navigator::navigateHistory
+            )
+
+            historyNavGraph(
                 padding = padding,
             )
         }

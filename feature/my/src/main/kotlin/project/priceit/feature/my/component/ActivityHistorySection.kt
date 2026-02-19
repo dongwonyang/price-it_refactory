@@ -3,6 +3,7 @@ package project.priceit.feature.my.component
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,13 +25,16 @@ import project.priceit.core.designsystem.R
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.core.designsystem.theme.Gray
 import project.priceit.core.designsystem.theme.Typography
+import project.priceit.model.HistoryType
 
 @Composable
-fun ActivityHistorySection() {
+fun ActivityHistorySection(
+    onClickBox: (HistoryType) -> Unit
+) {
     val boxList = listOf(
-        "작업 기록" to R.drawable.ic_history_work,
-        "의뢰 기록" to R.drawable.ic_history_request,
-        "포인트 내역" to R.drawable.ic_history_point
+        Triple("작업 기록", R.drawable.ic_history_work, HistoryType.WORK),
+        Triple("의뢰 기록", R.drawable.ic_history_request, HistoryType.REQUEST),
+        Triple("포인트 내역", R.drawable.ic_history_point, HistoryType.POINT)
     )
 
     Column() {
@@ -42,10 +46,11 @@ fun ActivityHistorySection() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            boxList.forEach { (text, iconResId) ->
+            boxList.forEach { (text, iconResId, historyType) ->
                 ActivityBox(
                     text = text,
-                    iconResId = iconResId
+                    iconResId = iconResId,
+                    onClick = { onClickBox(historyType) }
                 )
             }
         }
@@ -54,8 +59,9 @@ fun ActivityHistorySection() {
 
 @Composable
 fun ActivityBox(
-    text:String,
-    @DrawableRes iconResId: Int
+    text: String,
+    @DrawableRes iconResId: Int,
+    onClick: () -> Unit
 ) {
     val shape = RoundedCornerShape(Dimens.RoundCommon)
 
@@ -64,6 +70,7 @@ fun ActivityBox(
             .clip(shape)
             .border(1.dp, color = Gray, shape = shape)
             .padding(vertical = Dimens.DpSmall, horizontal = Dimens.DpLarge)
+            .clickable(onClick = onClick)
     ) {
         Column() {
             Icon(
@@ -84,7 +91,9 @@ fun ActivityBox(
 @Composable
 @Preview
 fun ActivityHistorySectionPrev() {
-    ActivityHistorySection()
+    ActivityHistorySection(
+        onClickBox = {}
+    )
 }
 
 @Composable
@@ -92,6 +101,7 @@ fun ActivityHistorySectionPrev() {
 fun ActivityBoxPrev() {
     ActivityBox(
         text = "작업 기록",
-        iconResId = R.drawable.ic_history_work
+        iconResId = R.drawable.ic_history_work,
+        onClick = {}
     )
 }
