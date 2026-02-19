@@ -50,6 +50,7 @@ class FeaturePlugin : Plugin<Project> {
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:navigation"))
                 add("implementation", project(":core:data"))
+                add("implementation", project(":core:util"))
 
                 // Hilt
                 add("kapt", libs.findLibrary("hilt-compiler").get().get())
