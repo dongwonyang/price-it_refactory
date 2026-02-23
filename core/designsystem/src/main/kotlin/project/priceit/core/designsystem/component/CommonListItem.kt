@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import project.priceit.core.designsystem.R
 import project.priceit.core.designsystem.theme.Black50
 import project.priceit.core.designsystem.theme.Dimens
+import project.priceit.core.designsystem.theme.Primary
 
 @Composable
 fun CommonListItem(
@@ -32,7 +33,8 @@ fun CommonListItem(
     mainText: String,
     subText: String,
     rightText: String = "",
-    @DrawableRes icon: Int? = null,
+    @DrawableRes mainIcon: Int? = null,
+    iconTint: Color? = null,
     onClick: () -> Unit
 ) {
     Row(
@@ -53,20 +55,21 @@ fun CommonListItem(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                painter = if (icon == null) {
+                painter = if (mainIcon == null) {
                     painterResource(id = R.drawable.ic_place) // 기본 아이콘
                 } else {
-                    painterResource(id = icon)
+                    painterResource(id = mainIcon)
                 },
                 contentDescription = "위치 아이콘",
-                tint = Color(0xFF4285F4),
+                tint = iconTint ?: Primary,
                 modifier = Modifier.size(32.dp)
             )
         }
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(start = 16.dp)
+                .padding(start = 16.dp),
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
                 text = mainText,
@@ -74,13 +77,13 @@ fun CommonListItem(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            Text(
-                text = subText,
-                style = MaterialTheme.typography.bodySmall,
-                color = Black50,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+                Text(
+                    text = subText,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Black50,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
         }
 
         Text(

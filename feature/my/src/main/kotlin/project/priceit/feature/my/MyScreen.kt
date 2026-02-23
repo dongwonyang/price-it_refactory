@@ -21,6 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import project.priceit.core.designsystem.component.GrayDivider
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.my.component.ActivityHistorySection
+import project.priceit.feature.my.component.EtcSection
+import project.priceit.feature.my.component.EtcSectionPreview
 import project.priceit.feature.my.component.ProfileDialog
 import project.priceit.feature.my.component.ProfileSection
 import project.priceit.feature.my.component.RecentHistorySection
@@ -106,6 +108,14 @@ fun MyScreen(
                 onEvent(MyEvent.ClickHistory(type))
             }
         )
+
+        GrayDivider()
+
+        EtcSection(
+            onEvent = onEvent
+        )
+
+        Spacer(modifier = Modifier.height(Dimens.DpMedium))
     }
 }
 
