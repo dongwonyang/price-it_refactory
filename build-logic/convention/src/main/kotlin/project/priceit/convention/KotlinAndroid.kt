@@ -36,7 +36,7 @@ internal fun Project.configureKotlinAndroid(ext: LibraryExtension) {
 // 공통 속성
 private fun Project.configureBaseAndroid(
     compileSdkVersion: Int = 36,
-    minSdkVersion: Int = 24,
+    minSdkVersion: Int = 26,
     targetSdkVersion: Int = 36,
     testRunner: String = "androidx.test.runner.AndroidJUnitRunner"
 ) {

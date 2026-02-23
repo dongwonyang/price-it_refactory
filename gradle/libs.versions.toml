@@ -70,6 +70,7 @@ jetbrainsKotlinJvm = "2.0.21"
 runtime = "1.10.0"
 
 coil = "2.6.0"
+foundationLayout = "1.10.3"
 
 
 [libraries]
@@ -141,6 +142,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
 
 [plugins]
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
