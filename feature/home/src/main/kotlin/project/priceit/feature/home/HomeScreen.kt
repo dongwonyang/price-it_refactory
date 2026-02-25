@@ -107,7 +107,7 @@ private fun HomeScreen(
                 onRadiusChange = { tempRadius = it },
                 onDismiss = { onEvent(HomeEvent.HideRadiusDialog) },
                 onConfirm = {
-                    onEvent(HomeEvent.RadiusTempChanged(tempRadius))
+                    onEvent(HomeEvent.ChangeRadiusTemp(tempRadius))
                 }
             )
         }

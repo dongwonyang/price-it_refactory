@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
             HomeEvent.ShowRadiusDialog -> showRadiusDialog()
             HomeEvent.HideRadiusDialog -> hideRadiusDialog()
 
-            is HomeEvent.RadiusTempChanged -> {
+            is HomeEvent.ChangeRadiusTemp -> {
                 updateSearchRadius(event.radius)
                 hideRadiusDialog()
             }

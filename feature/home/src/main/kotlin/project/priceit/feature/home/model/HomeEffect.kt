@@ -6,7 +6,7 @@ sealed interface HomeEvent {
     object HideRadiusDialog : HomeEvent
 
     // 반경 설정 값 변경
-    data class RadiusTempChanged(val radius: Float) : HomeEvent
+    data class ChangeRadiusTemp(val radius: Float) : HomeEvent
 }
 sealed interface HomeEffect {
     object NavigateMy : HomeEffect
