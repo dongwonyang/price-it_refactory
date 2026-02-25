@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
+import project.priceit.feature.search.model.FilterItem
 import project.priceit.feature.search.model.SearchEffect
 import project.priceit.feature.search.model.SearchEvent
 import project.priceit.feature.search.model.SearchUiState
@@ -22,7 +24,37 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 
     fun onEvent(event: SearchEvent) {
         when (event) {
+            is SearchEvent.ChangeQuery -> {
+                _uiState.update { prev->
+                    prev.copy(searchUiSection = prev.searchUiSection.copy(query = event.query))
+                }
+            }
+            is SearchEvent.ClickFilterItem -> {
+                clickFilterItem(event.filterItem)
+            }
+            SearchEvent.ClickSearch -> {
+
+            }
             else -> {}
         }
     }
+
+    fun clickFilterItem(filterItem: FilterItem) {
+        _uiState.update { prev ->
+            val newList = prev.searchUiSection.searchFilterList.map {
+                if (it == filterItem) {
+                    it.copy(isSelected = !it.isSelected)
+                } else {
+                    it
+                }
+            }
+
+            prev.copy(
+                searchUiSection = prev.searchUiSection.copy(
+                    searchFilterList = newList
+                )
+            )
+        }
+    }
+
 }
