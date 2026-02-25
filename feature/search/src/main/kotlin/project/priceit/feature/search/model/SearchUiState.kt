@@ -1,6 +1,7 @@
 package project.priceit.feature.search.model
 
 data class SearchUiState (
+    val searchScreenType: SearchScreenType = SearchScreenType.DEFAULT,
     val userName: String = "",
     val searchUiSection: SearchUiSection = SearchUiSection()
 )
@@ -13,3 +14,4 @@ data class SearchUiSection(
         FilterItem(name = "Region 3", isSelected = false),
     )
 )
+
