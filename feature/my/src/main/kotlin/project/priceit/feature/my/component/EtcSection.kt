@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import project.priceit.core.designsystem.R
+import project.priceit.core.designsystem.component.NoSubStringListItem
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.my.model.MyEvent
 
@@ -39,33 +40,11 @@ fun EtcSection(
         verticalArrangement = Arrangement.spacedBy(Dimens.DpMedium)
     ) {
         list.forEach { (label, iconRes) ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Icon(
-                    painter = painterResource(id = iconRes),
-                    contentDescription = label,
-                    modifier = Modifier.size(24.dp)
-                )
-
-                Spacer(modifier = Modifier.width(Dimens.DpSmall))
-
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.titleSmall
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_left),
-                    contentDescription = null,
-                    modifier = Modifier.scale(scaleX = -1f, scaleY = 1f)
-                )
-            }
+            NoSubStringListItem(
+                iconRes = iconRes,
+                label = label,
+                rightArrow = true
+            )
         }
     }
 }
