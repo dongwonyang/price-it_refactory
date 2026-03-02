@@ -46,14 +46,11 @@ fun SearchSection(
     query: String,
     onQueryChange: (String) -> Unit,
 ) {
-    Column() {
-        CommonEditTextBox(
-            label = "Search for a product",
-            value = query,
-            onValueChange = onQueryChange,
-        )
-        Spacer(modifier = Modifier.padding(Dimens.DpSmall))
-    }
+    CommonEditTextBox(
+        label = "Search for a product",
+        value = query,
+        onValueChange = onQueryChange,
+    )
 }
 
 

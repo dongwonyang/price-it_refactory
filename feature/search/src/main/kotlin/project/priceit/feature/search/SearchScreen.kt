@@ -23,6 +23,7 @@ import project.priceit.core.designsystem.theme.Primary
 import project.priceit.core.designsystem.theme.White
 import project.priceit.feature.search.component.FilterSection
 import project.priceit.feature.search.component.SearchSection
+import project.priceit.feature.search.component.SearchWordListSection
 import project.priceit.feature.search.model.SearchEvent
 import project.priceit.feature.search.model.SearchUiState
 
@@ -83,6 +84,18 @@ fun SearchScreen(
                 bgColor = White,
                 outlineColor = Primary,
                 textColor = Primary
+            )
+        }
+
+        uiState.searchWordListSection.run {
+            SearchWordListSection(
+                lable = "최근 검색어",
+                wordList = recentSearchWordList
+            )
+
+            SearchWordListSection(
+                lable = "추첨 검색어",
+                wordList = recommendSearchWordList
             )
         }
     }
