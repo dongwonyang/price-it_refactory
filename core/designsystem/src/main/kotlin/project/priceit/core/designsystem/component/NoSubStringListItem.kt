@@ -46,11 +46,13 @@ fun NoSubStringListItem(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Icon(
-            painter = painterResource(id = R.drawable.ic_left),
-            contentDescription = null,
-            modifier = Modifier.scale(scaleX = -1f, scaleY = 1f)
-        )
+        if(rightArrow) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_left),
+                contentDescription = null,
+                modifier = Modifier.scale(scaleX = -1f, scaleY = 1f)
+            )
+        }
     }
 }
 
