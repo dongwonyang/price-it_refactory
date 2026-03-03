@@ -1,8 +1,7 @@
-package project.priceit.core.domain
+package project.priceit.core.domain.usccase
 
 import jakarta.inject.Inject
-import project.priceit.core.data.mapper.toResult
-import project.priceit.core.data.repo.AuthRepository
+import project.priceit.core.domain.repo.AuthRepository
 
 class AuthUseCase @Inject constructor(
     private val authRepository: AuthRepository
