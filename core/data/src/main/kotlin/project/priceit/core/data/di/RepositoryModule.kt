@@ -1,4 +1,4 @@
-package com.example.core.data.di
+package project.priceit.core.data.di
 
 import dagger.Binds
 import dagger.Module
