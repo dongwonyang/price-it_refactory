@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import project.priceit.core.data.repo.AuthRepository
+import project.priceit.core.domain.AuthUseCase
 import project.priceit.feature.auth.model.AuthEffect
 import project.priceit.feature.auth.model.AuthEvent
 import project.priceit.feature.auth.model.AuthUiState
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authUseCase: AuthUseCase
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<AuthUiState> = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState
@@ -47,7 +47,7 @@ class AuthViewModel @Inject constructor(
     // 로그인
     fun login(id: String, pw: String) = viewModelScope.launch {
         uiState.value.let {
-            authRepository.login(id, pw).onSuccess {
+            authUseCase.login(id, pw).onSuccess {
                 if (it) _effect.send(AuthEffect.NavigateHome)
             }.onFailure { }
         }
