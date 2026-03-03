@@ -1,8 +1,7 @@
 package project.priceit.core.navigation
 
-import androidx.compose.runtime.Composable
 import kotlinx.serialization.Serializable
-import project.priceit.model.HistoryType
+import project.priceit.core.model.HistoryType
 
 sealed interface Route {
     @Serializable

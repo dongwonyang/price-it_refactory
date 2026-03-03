@@ -2,7 +2,7 @@ package project.priceit.core.designsystem
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import project.priceit.model.Location
+import project.priceit.core.model.Location
 
 object MapConstants {
     const val DEFAULT_ZOOM = 15.0
