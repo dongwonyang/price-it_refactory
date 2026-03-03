@@ -1,4 +1,4 @@
-package project.priceit.model
+package project.priceit.core.model
 
 data class MartEntity(
     val martId: Int,
