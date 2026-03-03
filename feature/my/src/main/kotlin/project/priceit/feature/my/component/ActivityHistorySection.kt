@@ -1,7 +1,6 @@
 package project.priceit.feature.my.component
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +24,7 @@ import project.priceit.core.designsystem.R
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.core.designsystem.theme.Gray
 import project.priceit.core.designsystem.theme.Typography
-import project.priceit.model.HistoryType
+import project.priceit.core.model.HistoryType
 
 @Composable
 fun ActivityHistorySection(
