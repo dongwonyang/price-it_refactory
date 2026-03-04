@@ -1,7 +1,7 @@
 package project.priceit.feature.my.model
 
 import android.net.Uri
-import project.priceit.model.HistoryType
+import project.priceit.core.model.HistoryType
 
 sealed interface MyEvent {
     object ShowProfileDialog : MyEvent

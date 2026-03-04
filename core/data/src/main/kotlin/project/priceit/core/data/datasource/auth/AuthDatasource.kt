@@ -1,4 +1,4 @@
-package project.priceit.core.network.datasource.auth
+package project.priceit.core.data.datasource.auth
 
 import project.priceit.core.network.model.ApiResponse
 import project.priceit.core.network.model.response.LoginResponse

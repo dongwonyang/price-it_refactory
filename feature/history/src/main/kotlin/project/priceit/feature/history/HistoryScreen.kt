@@ -16,7 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.history.model.HistoryEvent
 import project.priceit.feature.history.model.HistoryUiState
-import project.priceit.model.HistoryType
+import project.priceit.core.model.HistoryType
 
 @Composable
 internal fun HistoryRoute(

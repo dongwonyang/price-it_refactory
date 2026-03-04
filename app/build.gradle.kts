@@ -16,6 +16,7 @@ android {
 
 dependencies {
     implementation(projects.core.designsystem)
+    implementation(projects.core.data)
     implementation(projects.feature.main)
 
     // Naver Maps

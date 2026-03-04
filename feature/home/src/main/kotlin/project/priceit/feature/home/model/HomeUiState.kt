@@ -1,8 +1,8 @@
 package project.priceit.feature.home.model
 
 import com.naver.maps.geometry.LatLng
-import project.priceit.model.Location
-import project.priceit.model.MartEntity
+import project.priceit.core.model.Location
+import project.priceit.core.model.MartEntity
 
 data class HomeUiState(
     val currentLocation: Location? = null,

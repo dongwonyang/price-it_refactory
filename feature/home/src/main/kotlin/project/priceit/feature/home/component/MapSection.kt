@@ -66,7 +66,7 @@ import project.priceit.core.designsystem.MapConstants
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.home.model.HomeUiState
 import project.priceit.feature.home.model.toLatLng
-import project.priceit.model.MartEntity
+import project.priceit.core.model.MartEntity
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalNaverMapApi::class)

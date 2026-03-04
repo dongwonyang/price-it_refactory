@@ -9,14 +9,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import project.priceit.core.navigation.MainTabRoute
 import project.priceit.core.navigation.Route
 import project.priceit.feature.history.navigateHistory
 import project.priceit.feature.home.navigateHome
 import project.priceit.feature.my.navigateMy
 import project.priceit.feature.request.navigateRequest
 import project.priceit.feature.search.navigateSearch
-import project.priceit.model.HistoryType
+import project.priceit.core.model.HistoryType
 
 class MainNavigator(
     val navController: NavHostController

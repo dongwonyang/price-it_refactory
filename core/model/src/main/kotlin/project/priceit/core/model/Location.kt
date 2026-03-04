@@ -1,4 +1,4 @@
-package project.priceit.model
+package project.priceit.core.model
 
 data class Location(
     val latitude: Double,

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import project.priceit.core.domain.AuthUseCase
+import project.priceit.core.domain.usccase.AuthUseCase
 import project.priceit.feature.auth.model.AuthEffect
 import project.priceit.feature.auth.model.AuthEvent
 import project.priceit.feature.auth.model.AuthUiState

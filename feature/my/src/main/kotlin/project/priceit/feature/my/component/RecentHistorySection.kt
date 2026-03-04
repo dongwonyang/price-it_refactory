@@ -2,7 +2,6 @@ package project.priceit.feature.my.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,7 +12,7 @@ import project.priceit.core.designsystem.component.CommonListItem
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.core.designsystem.theme.Typography
 import project.priceit.feature.my.model.RecentActivityUiState
-import project.priceit.model.HistoryType
+import project.priceit.core.model.HistoryType
 import project.priceit.util.toRelativeText
 
 @Composable

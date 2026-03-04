@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import project.priceit.core.navigation.Route
-import project.priceit.model.HistoryType
+import project.priceit.core.model.HistoryType
 
 fun NavController.navigateHistory(
     navOptions: NavOptions = NavOptions.Builder().build(),

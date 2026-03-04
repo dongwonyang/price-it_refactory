@@ -1,4 +1,4 @@
-package project.priceit.model
+package project.priceit.core.model
 
 import kotlinx.serialization.Serializable
 

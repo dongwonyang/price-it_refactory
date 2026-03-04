@@ -4,4 +4,6 @@ plugins {
 
 dependencies {
     implementation(projects.core.network)
+    implementation(projects.core.domain)
+    implementation(projects.core.model)
 }

@@ -22,14 +22,13 @@ import project.priceit.core.designsystem.component.GrayDivider
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.feature.my.component.ActivityHistorySection
 import project.priceit.feature.my.component.EtcSection
-import project.priceit.feature.my.component.EtcSectionPreview
 import project.priceit.feature.my.component.ProfileDialog
 import project.priceit.feature.my.component.ProfileSection
 import project.priceit.feature.my.component.RecentHistorySection
 import project.priceit.feature.my.model.MyEffect
 import project.priceit.feature.my.model.MyEvent
 import project.priceit.feature.my.model.MyUiState
-import project.priceit.model.HistoryType
+import project.priceit.core.model.HistoryType
 
 @Composable
 internal fun MyRoute(

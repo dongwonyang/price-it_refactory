@@ -4,7 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import project.priceit.core.data.repo.AuthRepository
+import project.priceit.core.domain.repo.AuthRepository
 import project.priceit.core.data.repo.AuthRepositoryImpl
 
 @Module

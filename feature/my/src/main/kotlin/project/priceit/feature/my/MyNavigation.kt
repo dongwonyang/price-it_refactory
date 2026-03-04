@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import project.priceit.core.navigation.MainTabRoute
-import project.priceit.model.HistoryType
+import project.priceit.core.model.HistoryType
 
 fun NavController.navigateMy(
     navOptions: NavOptions = NavOptions.Builder().build()
