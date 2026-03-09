@@ -1,12 +1,10 @@
 package project.priceit.feature.home.component
 
-import android.annotation.SuppressLint
 import android.view.MotionEvent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,24 +32,20 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.zIndex
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
-import com.naver.maps.map.compose.CameraPositionState
 import com.naver.maps.map.compose.CircleOverlay
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
 import com.naver.maps.map.compose.LocationTrackingMode
@@ -64,116 +58,101 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.util.MarkerIcons
 import project.priceit.core.designsystem.MapConstants
 import project.priceit.core.designsystem.theme.Dimens
+import project.priceit.core.model.MartEntity
 import project.priceit.feature.home.model.HomeUiState
 import project.priceit.feature.home.model.toLatLng
-import project.priceit.core.model.MartEntity
 
-@SuppressLint("UnusedBoxWithConstraintsScope")
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalNaverMapApi::class)
+@OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun MapSection(
     state: HomeUiState,
+    searchRadius: Float,
     onMartClick: (MartEntity) -> Unit,
     onShowRadiusDialog: () -> Unit = {},
+    isMapTouched: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    // 지도 터치 플래그 (내부에서만 사용)
-    val isMapTouched = remember { mutableStateOf(false) }
+
+    val currentLocation =
+        state.currentLocation?.toLatLng() ?: MapConstants.DEFAULT_LOCATION.toLatLng()
+
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition(currentLocation, MapConstants.DEFAULT_ZOOM)
+    }
+
+    LaunchedEffect(currentLocation) {
+        cameraPositionState.position = CameraPosition(
+            currentLocation,
+            cameraPositionState.position.zoom
+        )
+    }
+
+    LaunchedEffect(cameraPositionState.isMoving) {
+        isMapTouched(cameraPositionState.isMoving)
+    }
+
+    val parent = LocalView.current.parent
 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .aspectRatio(1f) // 정사각형
-            .pointerInteropFilter { motionEvent ->
-                when (motionEvent.actionMasked) {
-                    MotionEvent.ACTION_DOWN -> isMapTouched.value = true
-                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> isMapTouched.value = false
-                }
-                false
-            }
+            .aspectRatio(1f)
     ) {
-        val currentLocation = state.currentLocation?.toLatLng() ?: MapConstants.DEFAULT_LOCATION.toLatLng()
+        NaverMap(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInteropFilter { event ->
+                    when (event.actionMasked) {
 
-        val cameraPositionState: CameraPositionState = rememberCameraPositionState {
-            position = CameraPosition(currentLocation, MapConstants.DEFAULT_ZOOM)
-        }
-
-        DisposableEffect(key1 = currentLocation) {
-            onDispose {
-                cameraPositionState.position = CameraPosition(currentLocation, 0.0)
-            }
-        }
-
-        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-            val mapWidth = maxWidth
-            Surface(
-                modifier = Modifier
-                    .width(mapWidth)
-                    .height(mapWidth)
-                    .padding(bottom = Dimens.DpSmall),
-                shape = RoundedCornerShape(Dimens.RoundCommon)
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    NaverMap(
-                        modifier = Modifier.fillMaxSize(),
-                        cameraPositionState = cameraPositionState,
-                        properties = MapProperties(
-                            isBuildingLayerGroupEnabled = true,
-                            isTransitLayerGroupEnabled = false,
-                            locationTrackingMode = LocationTrackingMode.Follow
-                        ),
-                        uiSettings = MapUiSettings(
-                            isZoomControlEnabled = true,
-                            isLocationButtonEnabled = true,
-                            isCompassEnabled = true,
-                            isScaleBarEnabled = true
-                        ),
-                        onMapLoaded = {
-                            if (currentLocation != null) {
-                                cameraPositionState.position = CameraPosition(
-                                    currentLocation,
-                                    MapConstants.DEFAULT_ZOOM
-                                )
-                            }
+                        MotionEvent.ACTION_DOWN -> {
+//                        isMapTouched(true)
+                            parent?.requestDisallowInterceptTouchEvent(true)
                         }
-                    ) {
-                        if (currentLocation != null) {
-                            DrawSearchRadiusCircle(
-                                center = currentLocation,
-                                radiusInKm = state.searchRadius
-                            )
 
-                            DrawMarkers(
-                                userLocation = currentLocation,
-                                userLocationText = "내 위치",
-                                martEntities = state.nearbyMartEntities,
-                                martsWithValidCommissions = state.martsWithValidCommissions,
-                                onMartClick = onMartClick
-                            )
+                        MotionEvent.ACTION_UP,
+                        MotionEvent.ACTION_CANCEL -> {
+//                        isMapTouched(false)
+                            parent?.requestDisallowInterceptTouchEvent(false)
                         }
                     }
+                    false
+                },
+            cameraPositionState = cameraPositionState,
+            properties = MapProperties(
+                isBuildingLayerGroupEnabled = true,
+                isTransitLayerGroupEnabled = false,
+                locationTrackingMode = LocationTrackingMode.NoFollow
+            ),
+            uiSettings = MapUiSettings(
+                isZoomControlEnabled = true,
+                isLocationButtonEnabled = false,
+                isCompassEnabled = true,
+                isScaleBarEnabled = true
+            )
+        ) {
 
-//                    if (currentLocation == null) {
-//                        ShowLocationErrorMessage()
-//                    }
-                }
-            }
+            DrawSearchRadiusCircle(
+                center = currentLocation,
+                radiusInKm = searchRadius
+            )
+
+            DrawMarkers(
+                userLocation = currentLocation,
+                userLocationText = "내 위치",
+                martEntities = state.nearbyMartEntities,
+                martsWithValidCommissions = state.martsWithValidCommissions,
+                onMartClick = onMartClick
+            )
         }
 
-        // 반경 버튼 (현재 위치가 있으면 표시)
         if (state.currentLocation != null) {
-            Box(
+            RadiusButton(
+                radius = searchRadius,
+                onClick = onShowRadiusDialog,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                contentAlignment = Alignment.TopCenter
-            ) {
-                RadiusButton(
-                    radius = state.searchRadius,
-                    onClick = onShowRadiusDialog,
-                    modifier = Modifier.zIndex(1f)
-                )
-            }
+                    .align(Alignment.TopCenter)
+                    .padding(top = 16.dp)
+            )
         }
     }
 }
@@ -463,13 +442,13 @@ fun MapSectionPreview() {
     )
     val sampleState = HomeUiState(
         currentLocation = MapConstants.DEFAULT_LOCATION,
-        searchRadius = 0.3f,
         nearbyMartEntities = sampleMarts,
         martsWithValidCommissions = setOf("Mart A", "Mart C")
     )
 
     MapSection(
         state = sampleState,
-        onMartClick = {}
+        onMartClick = {},
+        searchRadius = 0.3f
     )
 }
