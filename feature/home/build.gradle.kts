@@ -9,4 +9,6 @@ dependencies {
 
     // Permissions
     implementation(libs.accompanist.permissions)
+    implementation(libs.transport.api)
+    implementation(libs.play.services.maps)
 }

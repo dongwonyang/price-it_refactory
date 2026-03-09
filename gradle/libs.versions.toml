@@ -71,6 +71,9 @@ runtime = "1.10.0"
 
 coil = "2.6.0"
 foundationLayout = "1.10.3"
+transportApi = "4.1.0"
+playServicesLocation = "21.3.0"
+playServicesMaps = "20.0.0"
 
 
 [libraries]
@@ -143,6 +146,9 @@ androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
+transport-api = { group = "com.google.android.datatransport", name = "transport-api", version.ref = "transportApi" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 
 [plugins]
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
