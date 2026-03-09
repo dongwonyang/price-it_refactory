@@ -5,4 +5,5 @@ plugins {
 
 dependencies {
     implementation(projects.core.model)
+    implementation(libs.play.services.location)
 }

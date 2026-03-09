@@ -1,5 +1,8 @@
 package project.priceit.feature.home
 
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,6 +54,18 @@ internal fun HomeRoute(
         }
     }
 
+    //permission check
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            viewModel.observeLocation()
+        }
+    }
+    LaunchedEffect(Unit) {
+        permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+    }
+
     val showContent = remember { mutableStateOf(true) }
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -76,7 +91,8 @@ internal fun HomeRoute(
         HomeScreen(
             padding = padding,
             uiState = uiState.value,
-            onEvent = viewModel::onEvent
+            onEvent = viewModel::onEvent,
+            searchRadius = viewModel.searchRadius.value
         )
     }
 }
@@ -85,11 +101,13 @@ internal fun HomeRoute(
 private fun HomeScreen(
     padding: PaddingValues,
     uiState: HomeUiState,
+    searchRadius: Float,
     onEvent: (HomeEvent) -> Unit
 ) {
     val scrollState = rememberScrollState()
     // 'true'면 스크롤 잠금 → 맵만 드래그 가능
     var isMapTouched by remember { mutableStateOf(false) }
+
 
     Column(
         modifier = Modifier
@@ -101,13 +119,12 @@ private fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(Dimens.DpMedium)
     ) {
         if (uiState.isRadiusDialogVisible) {
-            var tempRadius by remember { mutableStateOf(uiState.searchRadius) }
             RadiusSettingDialog(
-                currentRadius = tempRadius,
-                onRadiusChange = { tempRadius = it },
+                currentRadius = searchRadius,
+                onRadiusChange = { onEvent(HomeEvent.ChangeRadiusTemp(it)) },
                 onDismiss = { onEvent(HomeEvent.HideRadiusDialog) },
                 onConfirm = {
-                    onEvent(HomeEvent.ChangeRadiusTemp(tempRadius))
+                    onEvent(HomeEvent.ChangeRadiusTemp(searchRadius))
                 }
             )
         }
@@ -116,7 +133,9 @@ private fun HomeScreen(
         MapSection(
             state = uiState,
             onMartClick = {},
-            onShowRadiusDialog = { onEvent(HomeEvent.ShowRadiusDialog) }
+            onShowRadiusDialog = { onEvent(HomeEvent.ShowRadiusDialog) },
+            isMapTouched = { isMapTouched = it },
+            searchRadius = searchRadius
         )
 
         SearchSection { }
@@ -143,5 +162,6 @@ fun HomeScreenPreview() {
         padding = PaddingValues(0.dp),
         uiState = test(),
         onEvent = {},
+        searchRadius = 0.3f,
     )
 }
