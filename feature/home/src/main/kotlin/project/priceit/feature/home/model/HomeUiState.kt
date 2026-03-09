@@ -6,7 +6,6 @@ import project.priceit.core.model.MartEntity
 
 data class HomeUiState(
     val currentLocation: Location? = null,
-    val searchRadius: Float = 0.5f,
     val nearbyMartEntities: List<MartEntity> = emptyList(),
     val martsWithValidCommissions: Set<String> = emptySet(), // workDate가 남아있는 의뢰가 있는 마트들의 이름
     val isRadiusDialogVisible: Boolean = false,
@@ -16,8 +15,6 @@ data class HomeUiState(
 
 
 fun test(): HomeUiState = HomeUiState(
-    currentLocation = Location(37.5596, 126.9277),
-    searchRadius = 0.5f,
     nearbyMartEntities = listOf(
         MartEntity(
             martId = 1,
