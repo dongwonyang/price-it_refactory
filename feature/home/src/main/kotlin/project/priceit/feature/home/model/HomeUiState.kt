@@ -3,14 +3,15 @@ package project.priceit.feature.home.model
 import com.naver.maps.geometry.LatLng
 import project.priceit.core.model.Location
 import project.priceit.core.model.MartEntity
+import project.priceit.core.model.RequestEntity
 
 data class HomeUiState(
     val currentLocation: Location? = null,
     val nearbyMartEntities: List<MartEntity> = emptyList(),
     val martsWithValidCommissions: Set<String> = emptySet(), // workDate가 남아있는 의뢰가 있는 마트들의 이름
     val isRadiusDialogVisible: Boolean = false,
-    val currentRequestList: List<RequestItem> = emptyList(),
-    val recommentRequestList: List<RequestItem> = emptyList()
+    val currentRequestList: List<RequestEntity> = emptyList(),
+    val recommentRequestList: List<RequestEntity> = emptyList()
 )
 
 
@@ -39,16 +40,10 @@ fun test(): HomeUiState = HomeUiState(
     ),
     martsWithValidCommissions = setOf("Test Mart 1"),
     isRadiusDialogVisible = false,
-    currentRequestList = sampleRequests,
-    recommentRequestList = sampleRequests
 )
 
-data class RequestItem(val title: String, val location: String, val reward: String, val id: Int = 0)
 
-val sampleRequests = listOf(
-    RequestItem("딸기 한 팩 가격", "수석 마트", "리워드 : 15p"),
-    RequestItem("진라면 한 묶음 가격", "상암 홈플러스", "리워드 : 10p")
-)
+
 
 fun Location.toLatLng() = LatLng(
     this.latitude,

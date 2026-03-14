@@ -12,12 +12,12 @@ import androidx.compose.ui.text.font.FontWeight
 import project.priceit.core.designsystem.component.CommonListItem
 import project.priceit.core.designsystem.theme.Dimens
 import project.priceit.core.designsystem.theme.Typography
-import project.priceit.feature.home.model.RequestItem
+import project.priceit.core.model.RequestEntity
 
 @Composable
 fun ListSection(
     title:String,
-    items: List<RequestItem>
+    items: List<RequestEntity>
 ) {
     Column {
         Text(title, fontWeight = FontWeight.Bold, style = Typography.bodyMedium)
@@ -28,7 +28,7 @@ fun ListSection(
                 CommonListItem(
                     mainText = title,
                     subText = location,
-                    rightText = reward,
+                    rightText = "${reward}P",
                     onClick = {  }
                 )
             }
