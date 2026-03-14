@@ -7,7 +7,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.Priority
-import javax.inject.Inject
+import jakarta.inject.Inject
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -47,25 +47,16 @@ class LocationUseCase @Inject constructor(
 
                 result.lastLocation?.let {
                     Log.d("LocationUseCase", "emit location")
-                    val sendResult = trySend(Location(it.latitude, it.longitude))
-                    if (!sendResult.isSuccess) {
-                        Log.w("LocationUseCase", "Failed to send location: $sendResult")
-                    }
+                    trySend(Location(it.latitude, it.longitude))
                 }
             }
         }
 
-        try {
-            fusedLocationClient.requestLocationUpdates(
-                locationRequest,
-                callback,
-                Looper.getMainLooper()
-            )
-        } catch (e: SecurityException) {
-            // If location permission is not granted, close the flow with the exception
-            close(e)
-            return@callbackFlow
-        }
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            callback,
+            Looper.getMainLooper()
+        )
 
         awaitClose {
             fusedLocationClient.removeLocationUpdates(callback)

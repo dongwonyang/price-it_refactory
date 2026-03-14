@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import project.priceit.core.domain.usccase.LocationUseCase
+import project.priceit.core.domain.usccase.RequestUseCase
+import project.priceit.core.model.RequestEntity
 import project.priceit.feature.home.model.HomeEffect
 import project.priceit.feature.home.model.HomeEvent
 import project.priceit.feature.home.model.HomeUiState
@@ -22,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val locationUseCase: LocationUseCase
+    private val locationUseCase: LocationUseCase,
+    private val requestUseCase: RequestUseCase
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -32,6 +35,10 @@ class HomeViewModel @Inject constructor(
 
     private val _searchRadius: MutableStateFlow<Float> = MutableStateFlow(0.3f)
     val searchRadius = _searchRadius.asStateFlow()
+
+    init{
+        getRequestList()
+    }
 
     fun observeLocation() {
         viewModelScope.launch {
@@ -54,6 +61,20 @@ class HomeViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    fun getRequestList() = viewModelScope.launch{
+        requestUseCase.getHomeRequestList()
+            .onSuccess {
+                _uiState.update { prev->
+                    prev.copy(
+                        currentRequestList = it.first,
+                        recommentRequestList = it.second
+                    )
+                }
+            }.onFailure {
+
+            }
     }
 
     fun onEvent(event: HomeEvent) {
